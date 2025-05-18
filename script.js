@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const subject1Input = document.getElementById('subject1');
     const subject2Input = document.getElementById('subject2');
     const subject3Input = document.getElementById('subject3');
+    const subject4Input = document.getElementById('subject4');
+    const subject5Input = document.getElementById('subject5');
 
     const displayTotal = document.getElementById('display-total');
     const displayAverage = document.getElementById('display-average');
@@ -18,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultMath = document.getElementById('result-math');
     const resultEnglish = document.getElementById('result-english');
     const resultScience = document.getElementById('result-science');
+    const resultFilipino = document.getElementById('result-filipino');
+    const resultPE = document.getElementById('result-pe');
 
     // Dummy user credentials (FOR DEMO PURPOSES ONLY)
     const validUsername = 'marc';
@@ -42,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const math = parseInt(subject1Input.value) || 0;
         const english = parseInt(subject2Input.value) || 0;
         const science = parseInt(subject3Input.value) || 0;
+        const filipino = parseInt(subject4Input.value) || 0;
+        const pe = parseInt(subject5Input.value) || 0;
 
         // Individual subject remarks (pass if >= 75)
         resultMath.textContent = math >= 75 ? "Pass" : "Fail";
@@ -53,9 +59,15 @@ document.addEventListener('DOMContentLoaded', function() {
         resultScience.textContent = science >= 75 ? "Pass" : "Fail";
         resultScience.style.color = science >= 75 ? "#4CAF50" : "#f44336";
 
+        resultFilipino.textContent = filipino >= 75 ? "Pass" : "Fail";
+        resultFilipino.style.color = filipino >= 75 ? "#4CAF50" : "#f44336";
+
+        resultPE.textContent = pe >= 75 ? "Pass" : "Fail";
+        resultPE.style.color = pe >= 75 ? "#4CAF50" : "#f44336";
+
         // Total, average, and grade
-        const total = math + english + science;
-        const average = total / 3;
+        const total = math + english + science + filipino + pe;
+        const average = total / 5;
 
         let grade;
         if (average >= 90) {
@@ -85,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
         subject1Input.value = '';
         subject2Input.value = '';
         subject3Input.value = '';
+        subject4Input.value = '';
+        subject5Input.value = '';
 
         // Clear displayed data
         displayTotal.textContent = 0;
@@ -93,5 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultMath.textContent = '';
         resultEnglish.textContent = '';
         resultScience.textContent = '';
+        resultFilipino.textContent = '';
+        resultPE.textContent = '';
     });
 });

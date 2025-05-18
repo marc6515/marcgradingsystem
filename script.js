@@ -3,25 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginPage = document.getElementById('login-page');
     const dashboard = document.getElementById('dashboard');
     const loginError = document.getElementById('login-error');
-    const calculateButton = document.getElementById('calculate-button');
+    const addStudentButton = document.getElementById('add-student-button');
     const logoutButton = document.getElementById('logout-button');
 
+    const studentNameInput = document.getElementById('student-name');
     const subject1Input = document.getElementById('subject1');
     const subject2Input = document.getElementById('subject2');
     const subject3Input = document.getElementById('subject3');
     const subject4Input = document.getElementById('subject4');
     const subject5Input = document.getElementById('subject5');
-
-    const displayTotal = document.getElementById('display-total');
-    const displayAverage = document.getElementById('display-average');
-    const displayGrade = document.getElementById('display-grade');
-
-    // Individual result elements
-    const resultMath = document.getElementById('result-math');
-    const resultEnglish = document.getElementById('result-english');
-    const resultScience = document.getElementById('result-science');
-    const resultFilipino = document.getElementById('result-filipino');
-    const resultPE = document.getElementById('result-pe');
+    const studentsTableBody = document.querySelector('#students-table tbody');
 
     // Dummy user credentials (FOR DEMO PURPOSES ONLY)
     const validUsername = 'marc';
@@ -29,10 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
-
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-
         if (username === validUsername && password === validPassword) {
             loginPage.style.display = 'none';
             dashboard.style.display = 'block';
@@ -42,30 +31,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    calculateButton.addEventListener('click', function() {
+    addStudentButton.addEventListener('click', function() {
+        const name = studentNameInput.value.trim();
         const math = parseInt(subject1Input.value) || 0;
         const english = parseInt(subject2Input.value) || 0;
         const science = parseInt(subject3Input.value) || 0;
         const filipino = parseInt(subject4Input.value) || 0;
         const pe = parseInt(subject5Input.value) || 0;
 
-        // Individual subject remarks (pass if >= 75)
-        resultMath.textContent = math >= 75 ? "Pass" : "Fail";
-        resultMath.style.color = math >= 75 ? "#4CAF50" : "#f44336";
+        if (!name) {
+            alert('Please enter the student\'s name.');
+            return;
+        }
 
-        resultEnglish.textContent = english >= 75 ? "Pass" : "Fail";
-        resultEnglish.style.color = english >= 75 ? "#4CAF50" : "#f44336";
-
-        resultScience.textContent = science >= 75 ? "Pass" : "Fail";
-        resultScience.style.color = science >= 75 ? "#4CAF50" : "#f44336";
-
-        resultFilipino.textContent = filipino >= 75 ? "Pass" : "Fail";
-        resultFilipino.style.color = filipino >= 75 ? "#4CAF50" : "#f44336";
-
-        resultPE.textContent = pe >= 75 ? "Pass" : "Fail";
-        resultPE.style.color = pe >= 75 ? "#4CAF50" : "#f44336";
-
-        // Total, average, and grade
         const total = math + english + science + filipino + pe;
         const average = total / 5;
 
@@ -82,32 +60,41 @@ document.addEventListener('DOMContentLoaded', function() {
             grade = 'F';
         }
 
-        displayTotal.textContent = total;
-        displayAverage.textContent = average.toFixed(2);
-        displayGrade.textContent = grade;
-    });
+        // Add the student to the table
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${name}</td>
+            <td style="color:${math >= 75 ? '#4CAF50' : '#f44336'}">${math}</td>
+            <td style="color:${english >= 75 ? '#4CAF50' : '#f44336'}">${english}</td>
+            <td style="color:${science >= 75 ? '#4CAF50' : '#f44336'}">${science}</td>
+            <td style="color:${filipino >= 75 ? '#4CAF50' : '#f44336'}">${filipino}</td>
+            <td style="color:${pe >= 75 ? '#4CAF50' : '#f44336'}">${pe}</td>
+            <td>${total}</td>
+            <td>${average.toFixed(2)}</td>
+            <td>${grade}</td>
+        `;
+        studentsTableBody.appendChild(row);
 
-    logoutButton.addEventListener('click', function() {
-        dashboard.style.display = 'none';
-        loginPage.style.display = 'block';
-
-        // Clear input fields
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
+        // Clear inputs
+        studentNameInput.value = '';
         subject1Input.value = '';
         subject2Input.value = '';
         subject3Input.value = '';
         subject4Input.value = '';
         subject5Input.value = '';
+    });
 
-        // Clear displayed data
-        displayTotal.textContent = 0;
-        displayAverage.textContent = 0;
-        displayGrade.textContent = '';
-        resultMath.textContent = '';
-        resultEnglish.textContent = '';
-        resultScience.textContent = '';
-        resultFilipino.textContent = '';
-        resultPE.textContent = '';
+    logoutButton.addEventListener('click', function() {
+        dashboard.style.display = 'none';
+        loginPage.style.display = 'block';
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+        studentNameInput.value = '';
+        subject1Input.value = '';
+        subject2Input.value = '';
+        subject3Input.value = '';
+        subject4Input.value = '';
+        subject5Input.value = '';
+        studentsTableBody.innerHTML = '';
     });
 });

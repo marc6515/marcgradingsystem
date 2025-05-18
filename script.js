@@ -48,16 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const average = total / 5;
 
         let grade;
-        if (average >= 90) {
-            grade = 'A';
-        } else if (average >= 80) {
-            grade = 'B';
-        } else if (average >= 75) {
-            grade = 'C';
+        if (average >= 75) {
+            grade = 'Pass';
         } else if (average >= 60) {
-            grade = 'D';
+            grade = 'Remedial';
         } else {
-            grade = 'F';
+            grade = 'Failed';
         }
 
         // Add the student to the table
